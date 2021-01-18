@@ -148,4 +148,13 @@ router.post("/tokenIsValid", async (req, res) => {
 
 });
 
+// gets info for currently logged in user
+router.get("/", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    name: user.name,
+    id: user._id,
+  });
+});
+
 module.exports = router;
