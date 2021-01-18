@@ -92,15 +92,12 @@ router.post("/login", async (req, res) => {
 
     // json web token retrieve for the id of the currently logged in user
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    // json response to display an auth token, id, name, email, address and phone of currently logged in user
+    // json response to display an auth token, id and name of currently logged in user
     res.json({
       token,
       user: {
         id: user._id,
         name: user.name,
-        email: user.email,
-        address: user.address,
-        phone: user.phone,
       }
     })
 
