@@ -24,4 +24,9 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 });
 
 // setup routes as middleware
+
+//user router for userRouter middleware
 app.use("/users", require("./routes/userRouter"));
+
+// appointment router for appointmentRouter middleware
+app.use("/appointments", require("./routes/appointmentRouter"))

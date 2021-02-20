@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
       // bad request response if password does not match passwordCheck
       return res.status(400).json({msg: "Passwords entered do not match"});
     if (name.length < 5)
-      // bad request response if name is not minimum 10 characters long
+      // bad request response if name is not minimum 5 characters long
       return res.status(400).json({msg: "Name must be at least 5 characters long"});
     if (address.length < 10)
       // bad request response if address is not minimum 10 characters long
