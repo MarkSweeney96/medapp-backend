@@ -30,3 +30,9 @@ app.use("/users", require("./routes/userRouter"));
 
 // appointment router for appointmentRouter middleware
 app.use("/appointments", require("./routes/appointmentRouter"))
+
+// prescription router for prescriptionRouter middleware
+app.use("/prescriptions", require("./routes/prescriptionRouter"))
+
+// doctor router for doctorRouter middleware
+//app.use("/doctors", require("./routes/doctorRouter"))
