@@ -7,8 +7,8 @@ const prescriptionSchema = new mongoose.Schema({
   doctor: {type: String, required: true},
   date: {type: String, required: true},
   time: {type: String, required: true},
-  medication: {type: String},
-  notes: {type: String},
+  medication: {type: String, required: true},
+  notes: {type: String, required: true},
   complete: {type: String, required: true}
 },{
     timestamps: true
