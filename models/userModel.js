@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
   address: { type: String, required: true, minlength: 10 },
   phone: { type: String, required: true, minlength: 5 },
   //availability: [{ type: Schema.Types.ObjectId, ref: 'availability' }],
+}, {
+  timestamps: true
 });
 
 module.exports = User = mongoose.model("user", userSchema);

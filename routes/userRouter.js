@@ -11,7 +11,7 @@ const User = require("../models/userModel");
 
 // register router, post request with a request and response object
 router.post("/register", async (req, res) => {
-  let errors = [];
+  //let errors = [];
 
   try {
 
@@ -20,39 +20,39 @@ router.post("/register", async (req, res) => {
     // validation
     if (!email || !password || !passwordCheck || !name || !address || !phone)
       // bad request response if any of the above fields are empty
-      //return res.status(400).json({msg: "Not all fields have been entered!"});
-       errors.push({msg: "Not all fields have been entered!"});
+      return res.status(400).json({msg: "Not all fields have been entered!"});
+       //errors.push({msg: "Not all fields have been entered!"});
       if (email.length < 7)
         // bad request response if email is not minimum 7 characters long
-        //return res.status(400).json({msg1: "Email must be at least 7 characters long"});
-          errors.push({msg: "Email must be at least 7 characters long"});
+        return res.status(400).json({msg1: "Email must be at least 7 characters long"});
+          //errors.push({msg: "Email must be at least 7 characters long"});
     if (password.length < 5)
       // bad request response if password is not minimum 5 characters long
-      //return res.status(400).json({msg: "Password must be at least 5 characters long"});
-      errors.push({msg: "Password must be at least 5 characters long"});
+      return res.status(400).json({msg: "Password must be at least 5 characters long"});
+      //errors.push({msg: "Password must be at least 5 characters long"});
     if(password !== passwordCheck)
       // bad request response if password does not match passwordCheck
-      //return res.status(400).json({msg: "Passwords entered do not match"});
+      return res.status(400).json({msg: "Passwords entered do not match"});
       errors.push({msg: "Passwords entered do not match"});
     if (name.length < 5)
       // bad request response if name is not minimum 5 characters long
-      //return res.status(400).json({msg: "Name must be at least 5 characters long"});
-        errors.push({msg: "Name must be at least 5 characters long"});
+      return res.status(400).json({msg: "Name must be at least 5 characters long"});
+        //errors.push({msg: "Name must be at least 5 characters long"});
     if (address.length < 10)
       // bad request response if address is not minimum 10 characters long
-      //return res.status(400).json({msg: "Address must be at least 10 characters long"});
-      errors.push({msg: "Address must be at least 10 characters long"});
+      return res.status(400).json({msg: "Address must be at least 10 characters long"});
+      //errors.push({msg: "Address must be at least 10 characters long"});
     if (phone.length < 5)
       // bad request response if phone is not minimum 5 characters long
-      //return res.status(400).json({msg: "Phone must be at least 5 characters long"});
-      errors.push({msg: "Phone must be at least 5 characters long"});
+      return res.status(400).json({msg: "Phone must be at least 5 characters long"});
+      //errors.push({msg: "Phone must be at least 5 characters long"});
 
-      // return res.status(400).json(errors);
+       return res.status(400).json(errors);
     // if user with entered email already exists throw error and display error message
     const existingUser = await User.findOne({ email: email });
     if (existingUser)
-      //return res .status(400) .json({msg: "An account with this email already exists!"});
-      errors.push({msg: "An account with this email already exists!"});
+      return res .status(400) .json({msg: "An account with this email already exists!"});
+      //errors.push({msg: "An account with this email already exists!"});
 
     //bcrypt used to hash users passwords to keep them securely stored in the database
     const salt = await bcrypt.genSalt();
@@ -73,8 +73,8 @@ router.post("/register", async (req, res) => {
 
     // if an error occurs when registering a new user the error message is displayed
   } catch (err) {
-    //res.status(500).json({error: err.message });
-    res.status(500).json({errors});
+    res.status(500).json({error: err.message });
+    //res.status(500).json({errors});
   }
 
 });
@@ -169,29 +169,51 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
+// gets info for currently logged in user
+router.get("/findbyid/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.json({
+    id: user._id,
+    email: user.email,
+    name: user.name,
+    address: user.address,
+    phone: user.phone
+  });
+});
+
+//router for viewing all users
+router.get("/viewall", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch(err) {
+    res.status(500).send();
+  }
+});
+
 
 //router for editing a user
 router.put("/edit/:id", async (req, res) => {
   try {
     const {email, password, passwordCheck, name, address, phone} = req.body;
     const userId = req.params.id;
-
-    if(password !== passwordCheck)
-      // bad request response if password does not match passwordCheck
-      //return res.status(400).json({msg: "Passwords entered do not match"});
-      return res.status(400).json({msg: "passwords do not match"});
+    //
+    // if(password !== passwordCheck)
+    //   // bad request response if password does not match passwordCheck
+    //   //return res.status(400).json({msg: "Passwords entered do not match"});
+    //   return res.status(400).json({msg: "passwords do not match"});
 
     const originalUser = await User.findById(userId);
     if(!originalUser)
       return res.status(400).json({msg: "User with this ID does not exist"});
 
     //bcrypt used to hash users passwords to keep them securely stored in the database
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
+    //const salt = await bcrypt.genSalt();
+    //const passwordHash = await bcrypt.hash(password, salt);
 
   // update values for each user detail
   originalUser.email = email;
-  originalUser.password = passwordHash;
+  //originalUser.password = passwordHash;
   originalUser.name = name;
   originalUser.address = address;
   originalUser.phone = phone;

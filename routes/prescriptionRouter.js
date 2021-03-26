@@ -22,6 +22,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+//router for viewing one prescriptions
+router.get("/:id", async (req, res) => {
+  try {
+    const prescription = await Prescription.findById(req.params.id);
+    res.json(prescription);
+  } catch(err) {
+    res.status(500).send();
+  }
+});
+
 //router for creating a new prescription
 router.post("/create", async (req,res) => {
   try {
@@ -58,6 +68,28 @@ router.put("/edit/:id", async (req, res) => {
   originalPrescription.time = time;
   originalPrescription.medication = medication;
   originalPrescription.notes = notes;
+  originalPrescription.complete = complete;
+
+  const savedPrescription = await originalPrescription.save();
+  res.json(savedPrescription);
+
+  } catch(err) {
+    res.status(500).send();
+  }
+
+});
+
+//router for editing a prescription
+router.put("/complete/:id", async (req, res) => {
+  try {
+    const {complete} = req.body;
+    const prescriptionId = req.params.id;
+
+    const originalPrescription = await Prescription.findById(prescriptionId);
+    if(!originalPrescription)
+      return res.status(400).json({msg: "Prescription with this ID does not exist"});
+
+  // update values for each prescription detail
   originalPrescription.complete = complete;
 
   const savedPrescription = await originalPrescription.save();
