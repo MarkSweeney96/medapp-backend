@@ -11,7 +11,6 @@ const User = require("../models/userModel");
 
 // register router, post request with a request and response object
 router.post("/register", async (req, res) => {
-  //let errors = [];
 
   try {
 
@@ -21,38 +20,35 @@ router.post("/register", async (req, res) => {
     if (!email || !password || !passwordCheck || !name || !address || !phone)
       // bad request response if any of the above fields are empty
       return res.status(400).json({msg: "Not all fields have been entered!"});
-       //errors.push({msg: "Not all fields have been entered!"});
+
       if (email.length < 7)
         // bad request response if email is not minimum 7 characters long
         return res.status(400).json({msg1: "Email must be at least 7 characters long"});
-          //errors.push({msg: "Email must be at least 7 characters long"});
+
     if (password.length < 5)
       // bad request response if password is not minimum 5 characters long
       return res.status(400).json({msg: "Password must be at least 5 characters long"});
-      //errors.push({msg: "Password must be at least 5 characters long"});
+
     if(password !== passwordCheck)
       // bad request response if password does not match passwordCheck
       return res.status(400).json({msg: "Passwords entered do not match"});
-      errors.push({msg: "Passwords entered do not match"});
+
     if (name.length < 5)
       // bad request response if name is not minimum 5 characters long
       return res.status(400).json({msg: "Name must be at least 5 characters long"});
-        //errors.push({msg: "Name must be at least 5 characters long"});
+
     if (address.length < 10)
       // bad request response if address is not minimum 10 characters long
       return res.status(400).json({msg: "Address must be at least 10 characters long"});
-      //errors.push({msg: "Address must be at least 10 characters long"});
+
     if (phone.length < 5)
       // bad request response if phone is not minimum 5 characters long
       return res.status(400).json({msg: "Phone must be at least 5 characters long"});
-      //errors.push({msg: "Phone must be at least 5 characters long"});
 
-       return res.status(400).json(errors);
     // if user with entered email already exists throw error and display error message
     const existingUser = await User.findOne({ email: email });
     if (existingUser)
       return res .status(400) .json({msg: "An account with this email already exists!"});
-      //errors.push({msg: "An account with this email already exists!"});
 
     //bcrypt used to hash users passwords to keep them securely stored in the database
     const salt = await bcrypt.genSalt();
@@ -74,7 +70,6 @@ router.post("/register", async (req, res) => {
     // if an error occurs when registering a new user the error message is displayed
   } catch (err) {
     res.status(500).json({error: err.message });
-    //res.status(500).json({errors});
   }
 
 });
@@ -226,7 +221,6 @@ router.put("/edit/:id", async (req, res) => {
   }
 
 });
-
 
 
 module.exports = router;

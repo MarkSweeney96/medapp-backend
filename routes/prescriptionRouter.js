@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//router for viewing one prescriptions
+//router for viewing one prescription
 router.get("/:id", async (req, res) => {
   try {
     const prescription = await Prescription.findById(req.params.id);
