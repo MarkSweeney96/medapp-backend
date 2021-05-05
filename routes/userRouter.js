@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
 
       if (email.length < 7)
         // bad request response if email is not minimum 7 characters long
-        return res.status(400).json({msg1: "Email must be at least 7 characters long"});
+        return res.status(400).json({msg: "Email must be at least 7 characters long"});
 
     if (password.length < 5)
       // bad request response if password is not minimum 5 characters long
