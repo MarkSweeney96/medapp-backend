@@ -40,11 +40,11 @@ router.post("/create", async (req,res) => {
 
     if (date.length !== 10)
       // bad request response if date is not 10 characters long
-      return res.status(400).json({msg: "Date must be 10 characters long"});
+      return res.status(400).json({msg: "Date must be in the correct format: YYYY-MM-DD"});
 
     if (time.length !== 5)
       // bad request response if time is not 5 characters long
-      return res.status(400).json({msg: "Time must be 5 characters long"});
+      return res.status(400).json({msg: "Time must be in the correct format: 24HR 00:00"});
 
     if (status.length < 7)
       // bad request response if status is not minimum 7 characters long
@@ -82,11 +82,11 @@ router.put("/edit/:id", async (req, res) => {
 
     if (date.length !== 10)
       // bad request response if date is not 10 characters long
-      return res.status(400).json({msg: "Date must be 10 characters long"});
+      return res.status(400).json({msg: "Date must be in the correct format: YYYY-MM-DD"});
 
     if (time.length !== 5)
       // bad request response if time is not 5 characters long
-      return res.status(400).json({msg: "Time must be 5 characters long"});
+      return res.status(400).json({msg: "Time must be in the correct format: 24HR 00:00"});
 
     if (status.length < 7)
       // bad request response if status is not minimum 7 characters long

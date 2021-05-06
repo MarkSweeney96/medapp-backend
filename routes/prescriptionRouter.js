@@ -37,6 +37,40 @@ router.post("/create", async (req,res) => {
   try {
     const {patient, doctor, date, time, medication, notes, complete} = req.body;
 
+    //validation
+    if (!patient || !doctor || !date || !time || !medication || !notes || !complete)
+      // bad request response if any of the above fields are empty
+      return res.status(400).json({msg: "Not all fields have been entered!"});
+
+    if (patient.length < 5)
+      // bad request response if patient is not minimum 5 characters long
+      return res.status(400).json({msg: "Patient must be at least 5 characters long"});
+
+    if (doctor.length < 5)
+      // bad request response if doctor is not minimum 5 characters long
+      return res.status(400).json({msg: "Doctor must be at least 5 characters long"});
+
+    if (date.length !== 10)
+      // bad request response if date is not 10 characters long
+      return res.status(400).json({msg: "Date must be in the correct format: YYYY-MM-DD"});
+
+    if (time.length !== 5)
+      // bad request response if time is not 5 characters long
+      return res.status(400).json({msg: "Time must be in the correct format: 24HR 00:00"});
+
+    if (medication.length < 4)
+      // bad request response if medication is not minimum 4 characters long
+      return res.status(400).json({msg: "Medication must be at least 4 characters long"});
+
+    if (notes.length < 10)
+      // bad request response if notes is not minimum 10 characters long
+      return res.status(400).json({msg: "Notes must be at least 10 characters long"});
+
+      //THIS CODE CAUSED AN ERROR. FRONT END SUBMITS THIS VALUE AS "No" BY DEFAULT
+    //if (complete !== "Yes" || complete !== "No")
+      // bad request response if complete is not "yes" or "no"
+      //return res.status(400).json({msg: "Complete must be filled in as 'Yes' or 'No' "});
+
 
     const newPrescription = new Prescription({
       patient, doctor, date, time, medication, notes, complete
@@ -58,8 +92,6 @@ router.put("/edit/:id", async (req, res) => {
     const originalPrescription = await Prescription.findById(prescriptionId);
     if(!originalPrescription)
       return res.status(400).json({msg: "Prescription with this ID does not exist"});
-
-
 
   // update values for each prescription detail
   originalPrescription.patient = patient;

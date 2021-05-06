@@ -14,16 +14,4 @@ const prescriptionSchema = new mongoose.Schema({
     timestamps: true
   });
 
-  //doctor: { type: Schema.Types.ObjectId, ref: 'user' },
-  //patient: { type: Schema.Types.ObjectId, ref: 'user' },
-  // department: { type: String, required: true, minlength: 5 },
-  // medications: [
-  //   {
-  //     id: { type: Schema.Types.ObjectId, ref: 'medication' },
-  //     // note: {type: jhvbkjn},
-  //     // complete: {type:" uhjlnk"}
-  //   }
-  // ]
-//});
-
 module.exports = Prescription = mongoose.model("prescription", prescriptionSchema);
